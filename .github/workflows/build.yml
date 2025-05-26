@@ -65,7 +65,11 @@ jobs:
     - name: List build outputs (Debug)
       run: |
         echo "=== Build outputs ==="
-        ls -la build/bin/ || dir build\bin\
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          dir build\bin\
+        else
+          ls -la build/bin/
+        fi
 
     - name: Package for release (Windows)
       if: runner.os == 'Windows'
