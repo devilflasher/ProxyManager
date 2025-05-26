@@ -46,6 +46,11 @@ jobs:
         cd frontend
         npm install
 
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm run build
+
     - name: Build application
       run: wails build -platform ${{ matrix.platform }}
 
