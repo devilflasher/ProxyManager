@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>代理管理面板 Proxy Management Panel</title>
+    <link rel="stylesheet" href="./src/app.css"/>
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <h1><div class="loader"></div>管理面板<span class="subtitle">Admin Panel</span></h1>
+            <div class="header-actions">
+                <button id="addBtn" class="btn btn-success">+ 添加代理</button>
+                <button id="exportBtn" class="btn btn-outline">📤 导出配置</button>
+                <button id="importBtn" class="btn btn-outline">📥 批量导入</button>
+            </div>
+        </header>
+
+        <div class="proxy-container">
+            <div class="proxy-header">
+                <div class="stats-donate-row">
+                    <div class="stats-inline">
+                        <span class="stat-item">总数: <strong id="totalCount">0</strong></span>
+                        <span class="stat-item">运行中: <strong id="runningCount">0</strong></span>
+                    </div>
+                    <a href="https://truffle.wtf/project/Devilflasher" class="Btn donate-btn-small">
+                        打赏链接
+                        <svg viewBox="0 0 576 512" class="svgIcon"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="batch-toolbar">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="selectAllBtn"> 全选
+                </label>
+                <button id="startSelectedBtn" class="btn btn-success btn-small">启动选中</button>
+                <button id="stopSelectedBtn" class="btn btn-danger btn-small">停用选中</button>
+                <button id="deleteSelectedBtn" class="btn btn-delete btn-small">删除选中</button>
+                <span id="selectedCount" class="selected-info">已选择 0 项</span>
+            </div>
+            
+            <div id="proxyList" class="proxy-list">
+            </div>
+        </div>
+
+        <footer class="status-bar">
+            <div class="author-info">
+                Compiled by Devilflasher 
+                <a href="https://x.com/DevilflasherX" class="social-link">Twitter</a>
+                <a href="https://t.me/devilflasher0" class="social-link">Telegram</a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="proxyModal" class="modal">
+        <div class="modal-content modal-compact">
+            <div class="modal-header">
+                <h3 id="modalTitle">添加新代理</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="proxyForm" class="proxy-form-compact">
+                <div class="form-group">
+                    <label for="proxyName">代理名称</label>
+                    <div class="name-switch-row">
+                        <input type="text" id="proxyName" name="name" required placeholder="输入代理名称" class="name-input">
+                        <div class="header-switch">
+                            <label class="switch-label">
+                                <input type="checkbox" id="proxyEnabled" name="enabled" checked class="switch-input">
+                                <span class="switch-slider"></span>
+                                <span class="switch-text">启用代理</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h4>🔄 上游代理配置</h4>
+                    <div class="form-row">
+                        <div class="form-group form-group-sm">
+                            <label for="upstreamProtocol">协议</label>
+                            <select id="upstreamProtocol" name="upstream.protocol">
+                                <option value="http">HTTP</option>
+                                <option value="socks5">SOCKS5</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-group-lg">
+                            <label for="upstreamAddress">服务器地址</label>
+                            <input type="text" id="upstreamAddress" name="upstream.address" placeholder="127.0.0.1:8080" required>
+                        </div>
+                        <div class="form-group form-group-auth">
+                            <label for="upstreamUsername">用户名</label>
+                            <input type="text" id="upstreamUsername" name="upstream.username" placeholder="可选">
+                        </div>
+                        <div class="form-group form-group-auth">
+                            <label for="upstreamPassword">密码</label>
+                            <input type="password" id="upstreamPassword" name="upstream.password" placeholder="可选">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>📡 本地代理配置</h4>
+                    <div class="form-row">
+                        <div class="form-group form-group-sm">
+                            <label for="localProtocol">协议</label>
+                            <select id="localProtocol" name="local.protocol">
+                                <option value="http">HTTP</option>
+                                <option value="socks5">SOCKS5</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-group-md">
+                            <label for="localIP">监听IP</label>
+                            <input type="text" id="localIP" name="local.listen_ip" value="127.0.0.1" required>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label for="localPort">端口</label>
+                            <input type="number" id="localPort" name="local.listen_port" min="1" max="65535" required placeholder="8080">
+                        </div>
+                        <div class="form-group form-group-spacer"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                    <button type="submit" class="btn btn-primary">💾 保存配置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./src/main.js" type="module"></script>
+</body>
+</html>
+
+
