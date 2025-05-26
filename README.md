@@ -133,6 +133,10 @@
    cd frontend
    npm install
    cd ..
+
+   # ⚠️ 如果在构建时遇到vite权限错误，运行以下命令修复：
+   chmod +x frontend/node_modules/.bin/vite
+   chmod +x frontend/node_modules/.bin/*
    ```
 
 2. **构建应用**
@@ -288,6 +292,11 @@
    - 检查CSV文件格式是否正确
    - 确保CSV文件编码为UTF-8
    - 验证端口号范围是否正确（1-65535）
+
+5. **macOS构建时vite权限错误❓️**
+   - 错误信息：`Permission denied: vite`
+   - 解决方案：运行 `chmod +x frontend/node_modules/.bin/*`
+   - 原因：npm安装的二进制文件缺少执行权限
 
 ## ❇️ 更新日志
 
