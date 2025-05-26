@@ -68,7 +68,7 @@
 
 ## ❇️ 下载自动构建好的程序
 
-### 仓库Rreleases页面下载
+### 仓库Releases页面下载
 - proxy-manager-desktop-windows.zip
 - proxy-manager-desktop-macos-silicon-arm64.zip
 - proxy-manager-desktop-macos-intel-x86_64.zip
