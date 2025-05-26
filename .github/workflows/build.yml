@@ -62,22 +62,26 @@ jobs:
     - name: Build application
       run: wails build -platform ${{ matrix.platform }} -clean
 
-    - name: List build outputs (Debug)
-      run: |
-        ls -la build/bin/ || dir build\bin\
+    - name: List build outputs (Debug) - Windows
+      if: runner.os == 'Windows'
+      run: dir build\bin\
+
+    - name: List build outputs (Debug) - Unix
+      if: runner.os != 'Windows'
+      run: ls -la build/bin/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}-build
-        path: build/bin/${{ matrix.output }}
+        path: build/bin/
         if-no-files-found: error
 
     - name: Create Release (on tag)
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: build/bin/${{ matrix.output }}
-        fail_on_unmatched_files: true
+        files: build/bin/*
+        fail_on_unmatched_files: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
