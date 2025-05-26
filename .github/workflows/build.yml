@@ -21,7 +21,7 @@ jobs:
         include:
           - os: windows-latest
             platform: windows/amd64
-            artifact-name: proxy-manager-desktop-windows.exe
+            artifact-name: proxy-manager-desktop-windows.zip
             build-name: windows
           - os: macos-latest
             platform: darwin/amd64
@@ -74,7 +74,7 @@ jobs:
       if: matrix.build-name == 'windows'
       run: |
         mkdir release
-        copy "build\bin\proxy-manager-desktop.exe" "release\${{ matrix.artifact-name }}"
+        powershell Compress-Archive -Path "build\bin\proxy-manager-desktop.exe" -DestinationPath "release\${{ matrix.artifact-name }}"
 
     - name: Prepare macOS release
       if: startsWith(matrix.build-name, 'macos')

@@ -66,6 +66,18 @@
 - Node.js 16+ (开发环境)
 - 已安装 [Wails CLI](https://wails.io/docs/gettingstarted/installation)
 
+## ⚠️ Windows 使用说明
+
+### Windows Defender 警告处理
+首次运行时可能出现"Windows 已保护你的电脑"警告，这是正常现象：
+
+1. **原因**：程序暂未进行代码签名，Windows 会对未知发行者显示警告
+2. **解决**：点击"更多信息" → "仍要运行"
+3. **安全性**：本程序开源透明，代码可在 GitHub 查看
+
+### 杀毒软件误报
+某些杀毒软件可能误报，请添加程序到白名单或信任列表。
+
 ## ❇️ 如何编译使用
 
 ### Windows 系统构建
