@@ -62,19 +62,34 @@ jobs:
     - name: Build application
       run: wails build -platform ${{ matrix.platform }} -clean
 
-    - name: List build outputs (Debug) - Windows
+    - name: List build outputs (Debug)
+      run: |
+        echo "=== Build outputs ==="
+        ls -la build/bin/ || dir build\bin\
+
+    - name: Package for release (Windows)
       if: runner.os == 'Windows'
-      run: dir build\bin\
+      run: |
+        mkdir release
+        copy "build\bin\proxy-manager-desktop.exe" "release\proxy-manager-desktop-windows.exe"
 
-    - name: List build outputs (Debug) - Unix
-      if: runner.os != 'Windows'
-      run: ls -la build/bin/
+    - name: Package for release (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        mkdir release
+        cd build/bin
+        zip -r ../../release/proxy-manager-desktop-macos.zip proxy-manager-desktop.app
 
-    - name: Upload artifacts
+    - name: List release files
+      run: |
+        echo "=== Release files ==="
+        ls -la release/ || dir release\
+
+    - name: Upload release artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.os }}-build
-        path: build/bin/
+        name: release-${{ matrix.os }}
+        path: release/
         if-no-files-found: error
 
   release:
@@ -83,27 +98,19 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     
     steps:
-    - name: Download Windows artifacts
+    - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
-        name: windows-latest-build
-        path: ./artifacts/windows/
+        path: artifacts
 
-    - name: Download macOS artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: macos-latest-build
-        path: ./artifacts/macos/
-
-    - name: List all artifacts
-      run: find ./artifacts -type f
+    - name: List downloaded artifacts
+      run: find artifacts -type f
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: |
-          ./artifacts/windows/*
-          ./artifacts/macos/*
+        files: artifacts/*/*
         fail_on_unmatched_files: false
+        generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
