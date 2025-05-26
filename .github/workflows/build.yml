@@ -25,8 +25,12 @@ jobs:
             build-name: windows
           - os: macos-latest
             platform: darwin/amd64
-            artifact-name: proxy-manager-desktop-macos.zip
-            build-name: macos
+            artifact-name: proxy-manager-desktop-macos-intel.zip
+            build-name: macos-intel
+          - os: macos-latest
+            platform: darwin/arm64
+            artifact-name: proxy-manager-desktop-macos-silicon.zip
+            build-name: macos-silicon
 
     runs-on: ${{ matrix.os }}
 
@@ -73,7 +77,7 @@ jobs:
         copy "build\bin\proxy-manager-desktop.exe" "release\${{ matrix.artifact-name }}"
 
     - name: Prepare macOS release
-      if: matrix.build-name == 'macos'
+      if: startsWith(matrix.build-name, 'macos')
       run: |
         mkdir release
         cd build/bin
