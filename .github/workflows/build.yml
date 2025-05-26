@@ -25,11 +25,11 @@ jobs:
             build-name: windows
           - os: macos-latest
             platform: darwin/amd64
-            artifact-name: proxy-manager-desktop-macos-intel.zip
+            artifact-name: proxy-manager-desktop-macos-intel-x86_64.zip
             build-name: macos-intel
           - os: macos-latest
             platform: darwin/arm64
-            artifact-name: proxy-manager-desktop-macos-silicon.zip
+            artifact-name: proxy-manager-desktop-macos-silicon-arm64.zip
             build-name: macos-silicon
 
     runs-on: ${{ matrix.os }}
