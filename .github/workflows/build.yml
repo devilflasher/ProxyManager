@@ -46,6 +46,12 @@ jobs:
         cd frontend
         npm install
 
+    - name: Fix vite permissions (Unix)
+      if: matrix.os != 'windows-latest'
+      run: |
+        chmod +x frontend/node_modules/.bin/vite
+        chmod +x frontend/node_modules/.bin/*
+
     - name: Build frontend
       run: |
         cd frontend
