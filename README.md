@@ -51,7 +51,7 @@
 - **并发模型**：Go goroutines + channels
 - **跨平台**：支持 Windows 10+ 和 macOS 10.15+
 
-## ❇️ 环境要求
+## ❇️ 自行编译环境要求
 
 ### Windows 系统
 - Windows 10/11 (64-bit)
@@ -66,7 +66,14 @@
 - Node.js 16+ (开发环境)
 - 已安装 [Wails CLI](https://wails.io/docs/gettingstarted/installation)
 
-## ⚠️ Windows 使用说明
+## ❇️ 下载自动构建好的程序
+
+### 仓库Rreleases页面下载
+- proxy-manager-desktop-windows.zip
+- proxy-manager-desktop-macos-silicon-arm64.zip
+- proxy-manager-desktop-macos-intel-x86_64.zip
+
+## ⚠️ Windows 提醒
 
 ### Windows Defender 警告处理
 首次运行时可能出现"Windows 已保护你的电脑"警告，这是正常现象：
@@ -78,7 +85,7 @@
 ### 杀毒软件误报
 某些杀毒软件可能误报，请添加程序到白名单或信任列表。
 
-## ❇️ 如何编译使用
+## ❇️ 如何本地编译使用
 
 ### Windows 系统构建
 
