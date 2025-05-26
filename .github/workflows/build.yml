@@ -38,17 +38,13 @@ jobs:
     - name: Install Wails
       run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
-    - name: Install dependencies (Windows)
-      if: matrix.os == 'windows-latest'
-      run: |
-        # Windows 特定的依赖安装
-        npm install -g @wailsapp/cli
+    - name: Install Go dependencies
+      run: go mod download
 
-    - name: Install dependencies (macOS)
-      if: matrix.os == 'macos-latest'
+    - name: Install frontend dependencies
       run: |
-        # macOS 特定的依赖安装
-        npm install -g @wailsapp/cli
+        cd frontend
+        npm install
 
     - name: Build application
       run: wails build -platform ${{ matrix.platform }}

@@ -12,10 +12,8 @@ import (
 var assets embed.FS
 
 func main() {
-	// Create an instance of the app structure
 	app := NewApp()
 
-	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "代理管理器 - NoBiggie社区特供版",
 		Width:  1024,
@@ -26,7 +24,7 @@ func main() {
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.startup,
 		OnShutdown:       app.shutdown,
-		LogLevel:         2, // 设置日志级别：0=Trace, 1=Debug, 2=Info, 3=Warning, 4=Error
+		LogLevel:         2,
 		Bind: []interface{}{
 			app,
 		},
