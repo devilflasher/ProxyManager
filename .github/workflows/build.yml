@@ -3,10 +3,9 @@ name: Build Application
 on:
   push:
     branches: [ main, master ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ main, master ]
-  release:
-    types: [created]
 
 jobs:
   build:
@@ -78,8 +77,8 @@ jobs:
         path: build/bin/
         if-no-files-found: error
 
-    - name: Create Release (on release)
-      if: github.event_name == 'release'
+    - name: Create Release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
         files: build/bin/*
