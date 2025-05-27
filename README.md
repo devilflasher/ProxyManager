@@ -28,6 +28,16 @@
 
 **适用场景**：浏览器多开代理配置、爬虫开发调试、批量账号管理、代理池统一管理、网络环境测试等需要灵活使用不同协议代理的场景。
 
+## ❇️ 软件界面展示
+
+<div align="center">
+
+
+![主界面展示](./docs/images/main-interface.png)
+
+
+</div>
+
 ## ❇️ 功能特性
 
 -  高性能架构：基于 Go 语言开发，利用 goroutine 实现高并发代理处理
@@ -68,7 +78,9 @@
 
 ## ❇️ 下载自动构建好的程序
 
-### 仓库Releases页面下载
+
+### 仓库Rreleases页面下载
+
 - proxy-manager-desktop-windows.zip
 - proxy-manager-desktop-macos-silicon-arm64.zip
 - proxy-manager-desktop-macos-intel-x86_64.zip
